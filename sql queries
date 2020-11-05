@@ -1,4 +1,4 @@
-# combine two outputs
+#### combine two outputs
 
 SELECT * from
 	(
@@ -15,7 +15,17 @@ SELECT * from
       round(AVG(CAST(reachability AS float))*100,2) as avgreachability
      from nnmDeviceReachability
      where assetCode like '%PTZ%' and verifiedTime >= '20201101'
-	) t
-  
-  
+	) t;
+
+
+### get average
+SELECT
+	shortname,
+	assetCode,
+round(AVG(CAST(reachability AS float))*100,2) as AvgReachability
+FROM
+  nnmDeviceReachability as ndra
+where assetCode like '%FXD%'
+group by shortname, assetCode
+order by assetCode;
   
