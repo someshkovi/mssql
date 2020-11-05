@@ -1,0 +1,21 @@
+# combine two outputs
+
+SELECT * from
+	(
+		select 
+      count(distinct shortname) as count,
+      count(distinct verifiedTime) as thours,
+      round(AVG(CAST(reachability AS float))*100,2) as avgreachability
+     from nnmDeviceReachability
+     where assetCode like '%FXD%' and verifiedTime >= '20201101'
+		union
+		select
+      count(distinct shortname) as count,
+      count(distinct verifiedTime) as thours,
+      round(AVG(CAST(reachability AS float))*100,2) as avgreachability
+     from nnmDeviceReachability
+     where assetCode like '%PTZ%' and verifiedTime >= '20201101'
+	) t
+  
+  
+  
