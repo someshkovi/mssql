@@ -1,0 +1,24 @@
+SELECT
+  $__timeEpoch(verifiedTime),
+  reachability as value,
+  shortname as metric
+FROM
+  nnmDeviceReachability
+WHERE
+  $__timeFilter(verifiedTime)
+ORDER BY
+  verifiedTime ASC
+
+
+select distinct shortname, assetCode from nnmDeviceReachability order by assetCode
+
+select
+  verifiedTime as time,
+  count(distinct shortname) as count_of_Devices,
+	count(distinct verifiedTime) as duration_in_hours,
+	round(AVG(CAST(reachability AS float))*100,2) as avg_reachability 
+from nnmDeviceReachability 
+	where (assetCode like '%FXD%' or assetCode like '%PTZ%') and $__timeFilter(verifiedTime)
+group by verifiedTime
+ORDER BY
+  verifiedTime ASC
